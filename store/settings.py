@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-!^cpc&r974l4l*dm@x&-178=+d8axcz!)b9)jzbcx0ygp6r(^&
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -146,3 +146,15 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Users
 AUTH_USER_MODEL = 'users.User'
+
+# Sending e-mail
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_HOST = 'localhost'
+# EMAIL_PORT = 587
+# EMAIL_HOST_USER = 'django@store'
+# EMAIL_HOST_PASSWORD = 'store'
+# EMAIL_USE_SSL = False
+# DOMAIN_NAME = 'localhost:8000'
+
+EMAIL_HOST = 'smtp.yandex.ru'  # протокол который позволяет отправить сообщение
+EMAIL_PORT = 465  # порт с которого отправляет письмо яндекс

@@ -3,6 +3,7 @@ from django.urls import reverse
 from django.contrib import auth, messages
 
 from users.forms import UserLoginForm, UserRegistrationForm, UserProfileForm
+from users.models import User, EmailVerification
 
 # Create your views here.
 
@@ -57,3 +58,14 @@ def logout(request):
     return HttpResponseRedirect(reverse('index'))
 
 
+def email_verification(request, email, code):
+    user = User.objects.get(email=email)
+    email_verification = EmailVerification.objects.filter(user=user, code=code)
+    if email_verification.exists() and not email_verification.last().is_expired():
+        user.is_verified_email = True  # подтверждаем почту в БД
+        user.save()  # обновляем данные о данном пользователя в БД Users
+        context = {'title': 'Store - Подтверждение электронной почты'}
+        return render(request, 'users/email_verification.html', context)
+    else:
+        messages.error(request, 'Ссылка истекла друг мой, где ты был до сих пор?')
+        return HttpResponseRedirect(reverse('index'))
